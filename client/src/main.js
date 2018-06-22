@@ -5,24 +5,25 @@ import App from './App'
 import router from './router'
 /* eslint-disable-next-line */
 import io from 'socket.io-client'
+import VueSocketIO from 'vue-socket.io';
 
-var socket = io.connect()
+export const socket = io('http://localhost:4000')
 /* eslint-disable-next-line */
-socket.emit('set', 'is_it_ok', function (response) {
-  console.log(response)
-})
+// socket.emit('set', 'is_it_ok', function (response) {
+//   console.log(response)
+// })
 
-Vue.config.productionTip = false
+Vue.use(VueSocketIO, socket)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#root',
+  el: '#app',
   router,
-  data () {
-    return {
-      InputOutput: socket
-    }
-  },
+  // data () {
+  //   return {
+  //    // InputOutput: {socket}
+  //   }
+  // },
   components: { App },
-  template: '<App :inout="InputOutput"></App>'
+  template: '<App/>'
 })

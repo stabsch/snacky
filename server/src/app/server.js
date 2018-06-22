@@ -11,7 +11,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')))
 io.sockets.on('connection', function (socket) {
     socket.on('set', function (status, callback) {
         console.log(status);
-        callback('ok');
+        callback('this is a callback');
     });
 });
 

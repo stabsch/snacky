@@ -21,7 +21,7 @@
 
        <li :key="test" v-for="test in testMessages">{{test}}</li>
        </ul>
-      <p>{{io}}</p>
+      <p></p>
     </footer>
   </div>
 
@@ -33,10 +33,8 @@
 
 export default {
   name: 'app',
-  props: ['inout'],
   data () {
     return {
-      io: this.inout,
       testMessages: ['Site loaded', 'lets try']
     }
   },
@@ -54,6 +52,14 @@ export default {
     /* eslint-disable-next-line */
     this.testMessages.push('mounted')
     this.initListener()
+  },
+  sockets: {
+    connect() {
+      this.testMessages.push('socket connected')
+      this.$socket.emit('set', 'is_it_ok', function (response) {
+  console.log(response)
+})
+    }
   }
 }
 </script>
