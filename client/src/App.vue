@@ -124,27 +124,28 @@ img {
 }
 footer {
   background: #ccc;
-  padding: 20px;
+  padding: 0px;
   display: flex;
   flex-direction: row;
   flex: 0 1 auto;
-  max-height: 20%;
+  max-height: 25vh;
   justify-content: center;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 header {
-  background: #ccc;
+  background: #B82601;/*#F53240;*//*#AF473C;*//*#E24E42;*/ /*#984B43;*/
   padding: 0px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
   min-height: 15vh;
+  max-height: 30vh;
 }
 .headerlogo {
   font-family: 'Damion', cursive;
   font-size: 10vh;
-
+  color: #FFFFFF;
   margin: 0px;
 }
 </style>
