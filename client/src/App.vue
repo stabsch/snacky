@@ -10,18 +10,20 @@
       </div>
       <div class="wrapper3">
               <img src="./assets/logo.png">
+
       </div>
 <!--       <p>THIS IS MY CONTENT</p>
       <img src="./assets/logo.png"> -->
     </div>
     <footer>
-      <img src="./assets/logo.png">
-             <ul>
+                  <MessageBar></MessageBar>
+             
  <!-- eslint-disable-next-line -->
+<!--       <ul>
 
        <li :key="test" v-for="test in testMessages">{{test}}</li>
-       </ul>
-      <p></p>
+       </ul> -->
+      <!-- <p>{{testValue}}</p> -->
     </footer>
   </div>
 
@@ -30,12 +32,19 @@
 <script>
 // const io = require('socket.io')()
 // import * as io from 'socket.io'
+import MessageBar from './components/MessageBar.vue'
 
 export default {
   name: 'app',
+  components: {
+    MessageBar
+  },
   data () {
     return {
-      testMessages: ['Site loaded', 'lets try']
+      testMessages: ['Site loaded', 'lets try'],
+      testValue: 0,
+      pastSnacks: [],
+      currentSnacks: []
     }
   },
   methods: {
@@ -57,8 +66,14 @@ export default {
     connect() {
       this.testMessages.push('socket connected')
       this.$socket.emit('set', 'is_it_ok', function (response) {
-  console.log(response)
-})
+      console.log(response)
+      })
+    },
+    needCoffee(value) {
+      this.testValue = value
+    },
+    addSnack(data) {
+      currentSnacks
     }
   }
 }
@@ -83,7 +98,7 @@ html, body, #app {
 }
 .wrapper1 {
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 1 auto;
   background: #ddd;
   flex-direction: row;
   justify-content: center;
@@ -102,6 +117,7 @@ html, body, #app {
   flex-direction: column;
   flex-basis: 500px ;
 
+
 }
 img {
   align-self: start;
@@ -111,19 +127,24 @@ footer {
   padding: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  flex: 0 1 auto;
+  max-height: 20%;
+  justify-content: center;
+  overflow: hidden;
 }
 header {
   background: #ccc;
   padding: 0px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-end;
-  min-height: 15%;
+  min-height: 15vh;
 }
 .headerlogo {
   font-family: 'Damion', cursive;
-  font-size: 100px;
+  font-size: 10vh;
+
+  margin: 0px;
 }
 </style>
