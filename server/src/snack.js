@@ -7,8 +7,7 @@ module.exports = {
 	},
 	setID: function (data) {
 		// body...
-		var time =   new Date().getTime().toString()
-		data.messageID = data.userID + time
+		data.messageID = data.userID + new Date().getTime().toString()
 		return data
 	}
 }

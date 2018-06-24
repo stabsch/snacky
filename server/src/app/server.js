@@ -3,6 +3,9 @@ var app = express()
 var path = require('path')
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
+// import * as Snack from '../snack.js'
+var Snack = require('../snack.js')
+
 
 // server.listen(4000)
 var pastSnacks = []
@@ -19,13 +22,13 @@ io.sockets.on('connection', function (socket) {
     });
 
     // what happens when a client wants to add a new snack
-    socket.on('newSnack', (data) => {
+    socket.on('createSnack', (data) => {
     	// id obviously not truly unique, but ok for now
-    	data.id = new Date().getTime()
+    	// Snack.setID(data)
     	// add to past snacks on the server
-    	pastSnacks.push(data)
+    	pastSnacks.push(Snack.setID(data))
     	// save
-
+        console.log(pastSnacks)
     	// broadcast to all Users connected (including original client)
     	socket.broadcast.emit('addSnack', data)
     	socket.emit('addSnack', data)
@@ -36,7 +39,7 @@ io.sockets.on('connection', function (socket) {
     socket.emit('needCoffee',10)
 });
 
-console.log(new Date().getTime)
+console.log(new Date().getTime())
 
 server.listen(4000)
 module.exports = app

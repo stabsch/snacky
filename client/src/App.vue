@@ -10,22 +10,20 @@
       </div>
       <div class="wrapper3">
               <p>{{userID}}</p>
-       <!--        <p>Here are some Tests:</p>
-              <br>
-               <p> {{testMessages}}</p> -->
-          <SnackMessage v-for="item in pastSnacks" :snack="item" :key="item.id"></SnackMessage>
+       <!-- <p>{{listSnacks}}</p> -->
+          <SnackMessage v-for="item in listSnacks" :snack="item" :key="item.id"></SnackMessage>
       </div>
-<!--       <p>THIS IS MY CONTENT</p>
-      <img src="./assets/logo.png"> -->
+
     </div>
     <footer>
-                  <MessageBar @readSnack="makeSnack($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
+                  <MessageBar @readSnack="createSnack($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
              
  <!-- eslint-disable-next-line -->
-<!--       <ul>
+      <ul>
 
        <li :key="test" v-for="test in testMessages">{{test}}</li>
-       </ul> -->
+       </ul>
+
       <!-- <p>{{testValue}}</p> -->
     </footer>
   </div>
@@ -51,15 +49,18 @@ export default {
       testMessages: [],
       testValue: 0,
       pastSnacks: [],
-      currentSnacks: [],
+      listSnacks: [],
+
 
     }
   },
   methods: {
-    makeSnack (data) {
-      // this.testMessages.push($event.a)
-      // this.testMessages.push($event.b)
-      // this.testMessages.push($event.c)
+    // what happens when App gets a Send notice from child MessageBar
+    createSnack (data) {
+      // socketio emit event create snack with read snack data
+      this.$socket.emit('createSnack', data, function (response) {
+        // body...
+      })
       this.pastSnacks.push(data)
     },
     // Check if a previous userID exists
@@ -78,6 +79,7 @@ export default {
   mounted () {
     /* eslint-disable-next-line */
       this.localStorageInit()
+
     },
 //Events for socketio API
   sockets: {
@@ -91,7 +93,10 @@ export default {
       this.testValue = value
     },
     addSnack(data) {
-      currentSnacks.push(data)
+      this.listSnacks.push(data)
+    },
+    oldSnacks (data) {
+      this.listSnacks = data
     }
   }
 }
@@ -116,10 +121,12 @@ html, body, #app {
 }
 .wrapper1 {
   display: flex;
-  flex: 1 1 auto;
+/*  flex: 1 1 auto;*/
   background: #ddd;
   flex-direction: row;
   justify-content: center;
+  /*scrolling in children wont work in firefox otherwise*/
+  min-height: 0px; 
 
 }
 .wrapper2 {
@@ -130,10 +137,12 @@ html, body, #app {
 }
 .wrapper3 {
   display: flex;
-  flex: 0 1 auto;
+  /*flex: 0 1 auto;*/
   background: #c3c3c3;
   flex-direction: column;
-  flex-basis: 500px ;
+/*  flex-basis: 500px ;*/
+overflow-y: scroll;
+
 
 
 }
