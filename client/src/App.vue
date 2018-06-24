@@ -9,17 +9,17 @@
          <img src="./assets/logo.png">
       </div>
       <div class="wrapper3">
-              <img src="./assets/logo.png">
-              <p>Here are some Tests:</p>
+              <p>{{userID}}</p>
+       <!--        <p>Here are some Tests:</p>
               <br>
-               <p> {{testMessages}}</p>
+               <p> {{testMessages}}</p> -->
           <SnackMessage v-for="item in pastSnacks" :snack="item" :key="item.id"></SnackMessage>
       </div>
 <!--       <p>THIS IS MY CONTENT</p>
       <img src="./assets/logo.png"> -->
     </div>
     <footer>
-                  <MessageBar @composeSnack="sendSnack"></MessageBar>
+                  <MessageBar @readSnack="makeSnack($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
              
  <!-- eslint-disable-next-line -->
 <!--       <ul>
@@ -37,6 +37,7 @@
 // import * as io from 'socket.io'
 import MessageBar from './components/MessageBar.vue'
 import SnackMessage from './components/SnackMessage.vue'
+import * as Snack from './snack.js'
 
 export default {
   name: 'app',
@@ -45,36 +46,40 @@ export default {
   },
   data () {
     return {
+      userID: '',
+      localuserID: false,
       testMessages: [],
       testValue: 0,
-      pastSnacks: ['bla','blaaa' , 'blaaaa'],
-      currentSnacks: []
+      pastSnacks: [],
+      currentSnacks: [],
+
     }
   },
   methods: {
-    initListener () {
-      // body...
-      // var socket = this.io.connect('http://localhost:4000')
-      this.testMessages.push('initListener is here')
-      // socket.on('connection', (socket) => {
-      //   this.testMessages.push('Connection on socket')
-      // })
-    },
-    sendSnack () {
+    makeSnack (data) {
       // this.testMessages.push($event.a)
       // this.testMessages.push($event.b)
       // this.testMessages.push($event.c)
-      this.testMessages.push('sendSnack')
-    }
-  },
-  created () {
-    this.$on('sendSnack')
+      this.pastSnacks.push(data)
+    },
+    // Check if a previous userID exists
+    // If so, load it and set corresp. bool to true
+    localStorageInit () {
+      if (localStorage.getItem('userID')){
+        this.userID = localStorage.getItem('userID')
+        this.localuserID=true
+
+      }
+  }
+},
+  compiled () {
+
   },
   mounted () {
     /* eslint-disable-next-line */
-    this.testMessages.push('mounted')
-    this.initListener()
-  },
+      this.localStorageInit()
+    },
+//Events for socketio API
   sockets: {
     connect() {
       this.testMessages.push('socket connected')

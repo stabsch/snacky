@@ -6,7 +6,7 @@
 			<img class="userimg" src="../assets/default-userimg.jpg">
 			</div>
 		</div>
-		<div class="activities">
+		<div class="snackPanel">
 <!--            <p>Coffee</p>
 			<p>Snack</p>
 			<p>Both</p>
@@ -22,36 +22,43 @@
 			<label for="walk">Go for a walk!</label> </li>
 		</ul>
 		</div>
-		<div class="additionalInfo">
+		<div class="optionsPanel">
 <!--            <p>Duration></p>
 			<p>Quickmatch</p>-->
 
-			<p><input type="radio" id="timeframe" value="Timeframe" v-model="pickedOptions">
-			<label for="timeframe">Time frame</label></p>
+			<p><input type="radio" id="meet" value="Meet" v-model="pickedOptions">
+			<label for="meet">Time frame</label></p>
 
 			<p><input type="radio" id="quickmatch" value="Quickmatch" v-model="pickedOptions">
 			<label for="quickmatch">Quickmatch</label></p>
 <br>
 		</div>
-		<div class="noteSend">
+		<div class="noteSendPanel">
 
 			<input type="text" v-model="notes" placeholder="Type additional notes here">
 									
 			<button v-on:click="SnackToApp">Send</button>
 			<p>{{checkedSnackType}}</p>
-			<p>{{user}}</p>
+			<p>{{user}}</p><p>{{userID}}</p><p>{{localuserID}}</p>
 
 		</div>
 	</div>
 </template>
 
 <script>
+import * as Snack from '../snack.js'
 export default {
 
   name: 'MessageBar',
+  props: {
+  	userID: String,
+  	localuserID: Boolean,
+  },
   data () {
 	return {
 		user: '',
+		// userID: '',
+		// localuserID:false,
 		checkedSnackType: [],
 		pickedOptions: [],
 		notes: ''
@@ -60,8 +67,12 @@ export default {
   methods: {
   	SnackToApp () {
   		// body...
-  		this.$emit('composeSnack', {user: this.user, snack: this.checkedSnackType, options: pickedOptions})
+  		// this.$emit('composeSnack', {user: this.user, snack: this.checkedSnackType, options: pickedOptions})
+  		this.$emit('readSnack',Snack.Snack(this.userID, this.user, this.checkedSnackType, this.pickedOptions, this.note))
   	}
+  },
+  compiled: {
+
   }  
 }
 </script>
@@ -109,7 +120,7 @@ export default {
 	padding: 20px;
 	/*text-align: center;*/
 }
-.activities {
+.snackPanel {
 
 	display: flex;
 	flex-direction:column;
@@ -120,13 +131,13 @@ export default {
 	padding: 20px;
 	max-height: 25vh;
 }
-.additionalInfo {
+.optionsPanel {
 	display: flex;
 	flex-direction:column;
 	flex: 0.5 0 auto;
 	padding: 20px;
 }
-.noteSend {
+.noteSendPanel {
 	display: flex;
 	flex-direction:column;
 	flex: 0.3 0 auto;
