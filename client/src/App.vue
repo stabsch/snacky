@@ -57,11 +57,15 @@ export default {
   methods: {
     // what happens when App gets a Send notice from child MessageBar
     createSnack (data) {
-      // socketio emit event create snack with read snack data
-      this.$socket.emit('createSnack', data, function (response) {
+      // socketio emit event createSnack using the data piped through by MB
+      var array = this.listSnacks
+      this.$socket.emit('createSnack',data, function (response) {
         // body...
+        console.log(response)
+      data.messageID=response
+      array.push(data)
       })
-      this.pastSnacks.push(data)
+
     },
     // Check if a previous userID exists
     // If so, load it and set corresp. bool to true
@@ -121,7 +125,7 @@ html, body, #app {
 }
 .wrapper1 {
   display: flex;
-/*  flex: 1 1 auto;*/
+ flex: 1 1 auto;
   background: #ddd;
   flex-direction: row;
   justify-content: center;
@@ -141,7 +145,8 @@ html, body, #app {
   background: #c3c3c3;
   flex-direction: column;
 /*  flex-basis: 500px ;*/
-overflow-y: scroll;
+  overflow-y: scroll;
+  min-width: 50vw;
 
 
 

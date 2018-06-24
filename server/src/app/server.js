@@ -22,7 +22,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     // what happens when a client wants to add a new snack
-    socket.on('createSnack', (data) => {
+    socket.on('createSnack', (data, callback) => {
     	// id obviously not truly unique, but ok for now
     	// Snack.setID(data)
     	// add to past snacks on the server
@@ -31,7 +31,9 @@ io.sockets.on('connection', function (socket) {
         console.log(pastSnacks)
     	// broadcast to all Users connected (including original client)
     	socket.broadcast.emit('addSnack', data)
-    	socket.emit('addSnack', data)
+    	// socket.emit('addSnack', data)
+        console.log(data.messageID)
+        callback(data.messageID)
     	})
     
     // if a new client connects, serve him the past Snacks	

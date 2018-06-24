@@ -38,8 +38,8 @@
 			<input type="text" v-model="notes" placeholder="Type additional notes here">
 									
 			<button v-on:click="SnackToApp">Send</button>
-			<p>{{checkedSnackType}}</p>
-			<p>{{user}}</p><p>{{userID}}</p><p>{{localuserID}}</p>
+<!-- 			<p>{{checkedSnackType}}</p>
+			<p>{{user}}</p><p>{{userID}}</p><p>{{localuserID}}</p> -->
 
 		</div>
 	</div>
