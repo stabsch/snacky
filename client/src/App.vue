@@ -10,13 +10,16 @@
       </div>
       <div class="wrapper3">
               <img src="./assets/logo.png">
-
+              <p>Here are some Tests:</p>
+              <br>
+               <p> {{testMessages}}</p>
+          <SnackMessage v-for="item in pastSnacks" :snack="item" :key="item.id"></SnackMessage>
       </div>
 <!--       <p>THIS IS MY CONTENT</p>
       <img src="./assets/logo.png"> -->
     </div>
     <footer>
-                  <MessageBar></MessageBar>
+                  <MessageBar @composeSnack="sendSnack"></MessageBar>
              
  <!-- eslint-disable-next-line -->
 <!--       <ul>
@@ -33,17 +36,18 @@
 // const io = require('socket.io')()
 // import * as io from 'socket.io'
 import MessageBar from './components/MessageBar.vue'
+import SnackMessage from './components/SnackMessage.vue'
 
 export default {
   name: 'app',
   components: {
-    MessageBar
+    MessageBar, SnackMessage
   },
   data () {
     return {
-      testMessages: ['Site loaded', 'lets try'],
+      testMessages: [],
       testValue: 0,
-      pastSnacks: [],
+      pastSnacks: ['bla','blaaa' , 'blaaaa'],
       currentSnacks: []
     }
   },
@@ -55,7 +59,16 @@ export default {
       // socket.on('connection', (socket) => {
       //   this.testMessages.push('Connection on socket')
       // })
+    },
+    sendSnack () {
+      // this.testMessages.push($event.a)
+      // this.testMessages.push($event.b)
+      // this.testMessages.push($event.c)
+      this.testMessages.push('sendSnack')
     }
+  },
+  created () {
+    this.$on('sendSnack')
   },
   mounted () {
     /* eslint-disable-next-line */
@@ -73,7 +86,7 @@ export default {
       this.testValue = value
     },
     addSnack(data) {
-      currentSnacks
+      currentSnacks.push(data)
     }
   }
 }
