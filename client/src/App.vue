@@ -22,13 +22,7 @@
     <footer>
                   <MessageBar @readSnack="createSnack($event)" @sendUserId="createUserID($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
              
- <!-- eslint-disable-next-line -->
-<!--       <ul>
 
-       <li :key="test" v-for="test in testMessages">{{test}}</li>
-       </ul> -->
-
-      <!-- <p>{{testValue}}</p> -->
     </footer>
   </div>
 
@@ -49,9 +43,6 @@ export default {
   data () {
     return {
       userID: null,
-      localuserID: false,
-      testMessages: [],
-      testValue: 0,
       pastSnacks: [],
       listSnacks: [],
 
@@ -81,7 +72,6 @@ export default {
       if (localStorage.getItem('userID')){
         this.userID = localStorage.getItem('userID')
         this.localuserID=true
-
       }
   }
 },
@@ -96,13 +86,9 @@ export default {
 //Events for socketio API
   sockets: {
     connect() {
-      this.testMessages.push('socket connected')
       this.$socket.emit('set', 'is_it_ok', function (response) {
       console.log(response)
       })
-    },
-    needCoffee(value) {
-      this.testValue = value
     },
     addSnack(data) {
       this.listSnacks.push(data)
@@ -151,12 +137,15 @@ html, body, #app {
 }
 .wrapper3 {
   display: flex;
-  /*flex: 0 1 auto;*/
-  background: #da9f93;
+  flex: 0 1 auto;
+  background: #AF473C;
   flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
 /*  flex-basis: 500px ;*/
   overflow-y: scroll;
   min-width: 50vw;
+  min-height: 0px;
 
 
 
@@ -165,12 +154,12 @@ img {
   align-self: start;
 }
 footer {
-  background: #AF473C;
+  background: #B82601;
   padding: 0px;
   display: flex;
   flex-direction: row;
-  flex: 0 1 auto;
-  max-height: 25vh;
+  flex: 1 0 auto;
+  max-height: 17vh;
   justify-content: center;
   border-top: 2px solid;
   border-color: #ebd4cb;
@@ -185,6 +174,8 @@ header {
   align-items: flex-end;
   min-height: 15vh;
   max-height: 30vh;
+  border-bottom: 2px solid;
+  border-color: #ebd4cb;
 }
 .headerlogo {
   font-family: 'Damion', cursive;

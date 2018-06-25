@@ -14,26 +14,25 @@
 			<span class="paneldescription">Choose at least one</span>
 			<ul class="activityList">
 
-				<!-- Emojis are unfortunately not looking very nicely in chrome for some reason -->
+				<!-- Emojis differ heavily between browsers -->
 				<li><input type="checkbox" id="coffee" value="Coffee" v-model="checkedSnackType">
-					<label for="coffee"><span class="foodicon"> ☕️ </span>Have a coffee!</label> </li>
+					<label for="coffee">☕️ Have a coffee!</label> </li>
 					<li><input type="checkbox" id="sweet" value="Sweet" v-model="checkedSnackType">
-						<label for="sweet"><span class="foodicon">🍫️</span> Have a sweet tooth?</label> </li>
+						<label for="sweet">🍫️ Have something sweet?</label> </li>
 						<li><input type="checkbox" id="fruit" value="Fruit" v-model="checkedSnackType">
-							<label for="fruit"><span class="foodicon">🍏️</span> Some healthy fruit, maybe?</label> </li>
-							<li><input type="checkbox" id="snack" value="Snack" v-model="checkedSnackType">
-								<label for="snack"><span class="foodicon">🍕️</span> How about a hearty Snack</label> </li>
+							<label for="fruit">🍏️ Some healthy fruit, maybe?</label> </li>
+							<li><input type="checkbox" id="lunch" value="Lunch" v-model="checkedSnackType">
+								<label for="lunch">🍕️ How about a hearty lunch</label> </li>
 							</ul>
 						</div>
-						<div class="optionsPanel">
-<!--            <p>Duration></p>
-	<p>Quickmatch</p>-->
+	<div class="optionsPanel">
+	<span class="paneldescription">Options</span>
 	<ul class="optionsList">
 	<li><input type="radio" id="meet" value="Meet" v-model="pickedOptions">
-		<label for="meet">Meet up</label></p>
+		<label for="meet">🙋️ Meet up</label></p>
 
 		<li><input type="radio" id="deliver" value="Deliver" v-model="pickedOptions">
-			<label for="deliver">Bring some by, please</label></li>
+			<label for="deliver">💻️ Bring to desk</label></li>
 	</ul>
 		</div>
 		<div class="noteSendPanel">
@@ -85,7 +84,7 @@ methods: {
 				this.userID = newUserId
 				// this prop gets mutated, however, this is intended:
 				// Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. Instead, use a data or computed property based on the prop's value. Prop being mutated: "userID"
-				// however, this get's dealt with by localStorageInit () in parent already
+				// however, this get's dealt with by localStorageInit () on parent rerender already 
 			}
 		}
 		if (this.checkedSnackType.length && this.pickedOptions.length && this.user &&this.userID) {
@@ -113,13 +112,7 @@ methods: {
 
 <style>
  @import url('https://fonts.googleapis.com/css?family=Lato')
-.foodicon { 
 
-	font-size: 30px;
-	/*unfortunately, you can't really see the standard  browser emoji*/
-	background-color: white;
-
-}
 .errorsList {
 	font-size: 12px;
 	line-height: 15px;
@@ -152,7 +145,7 @@ methods: {
 	/*  width: 50%;*/
 /*  display: flex;
 flex: 0 1 auto;*/
-background: #d2d2d2;
+background: transparent;
 margin: auto;
 }
 .wrapimg .userimg {
@@ -162,6 +155,9 @@ margin: auto;
 	max-width: 100px;*/
 	height: auto;
 	margin: auto;
+	border-radius: 10px;
+	border: 1px solid;
+	border-color: #ebd4cb;
 }
 .wholeBar {
 	display: flex;
@@ -176,7 +172,7 @@ margin: auto;
 .user {
 	display: flex;
 	flex-direction:column;
-	background-color: #AF473C;
+	background-color: #B82601;
 	justify-content: center;
 	flex: 0 0 auto;
 	align-items: center;
@@ -202,18 +198,21 @@ margin: auto;
 	display: flex;
 	flex-direction:column;
 	flex: 0.5 0 auto;
-	padding: 20px;
+	padding: 10px;
 	background-color: #B82601;
+	align-items: flex-start;
+	border-right: 1px solid;
+	border-color: #ebd4cb;
 }
 .noteSendPanel {
 	display: flex;
 	flex-direction:column;
-	justify-content: space-between;
+	justify-content: space-around;
 	flex: 0.3 0 auto;
 	padding-top:  20px;
 	padding-left: 20px;
 	padding-bottom: 10px;
-	background-color: #AF473C;
+	background-color: #B82601;
 	font-size: 15px;
 }
 
