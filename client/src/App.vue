@@ -1,5 +1,9 @@
 <template>
+
   <div id="app">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
     <header>
        <p class="headerlogo">snacktime</p>
 
@@ -16,13 +20,13 @@
 
     </div>
     <footer>
-                  <MessageBar @readSnack="createSnack($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
+                  <MessageBar @readSnack="createSnack($event)" @sendUserId="createUserID($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
              
  <!-- eslint-disable-next-line -->
-      <ul>
+<!--       <ul>
 
        <li :key="test" v-for="test in testMessages">{{test}}</li>
-       </ul>
+       </ul> -->
 
       <!-- <p>{{testValue}}</p> -->
     </footer>
@@ -44,7 +48,7 @@ export default {
   },
   data () {
     return {
-      userID: '',
+      userID: null,
       localuserID: false,
       testMessages: [],
       testValue: 0,
@@ -55,6 +59,10 @@ export default {
     }
   },
   methods: {
+    // create userID when prompted (and there isn't one already)
+    createUserID (userID) {
+      localStorage.setItem('userID', userID)
+    },
     // what happens when App gets a Send notice from child MessageBar
     createSnack (data) {
       // socketio emit event createSnack using the data piped through by MB
@@ -108,6 +116,8 @@ export default {
 
 <style>
  @import url('https://fonts.googleapis.com/css?family=Damion');
+ @import url('https://fonts.googleapis.com/css?family=Lato');
+
 
 html, body, #app {
   height: 100%;
@@ -126,7 +136,7 @@ html, body, #app {
 .wrapper1 {
   display: flex;
  flex: 1 1 auto;
-  background: #ddd;
+  background: #ccc;
   flex-direction: row;
   justify-content: center;
   /*scrolling in children wont work in firefox otherwise*/
@@ -136,13 +146,13 @@ html, body, #app {
 .wrapper2 {
   display: flex;
   flex: 0 1 auto;
-  background: #d1d1d1;
+  background: #ebd4cb;
   flex-direction: column;
 }
 .wrapper3 {
   display: flex;
   /*flex: 0 1 auto;*/
-  background: #c3c3c3;
+  background: #da9f93;
   flex-direction: column;
 /*  flex-basis: 500px ;*/
   overflow-y: scroll;
@@ -155,13 +165,15 @@ img {
   align-self: start;
 }
 footer {
-  background: #ccc;
+  background: #AF473C;
   padding: 0px;
   display: flex;
   flex-direction: row;
   flex: 0 1 auto;
   max-height: 25vh;
   justify-content: center;
+  border-top: 2px solid;
+  border-color: #ebd4cb;
   /*overflow: hidden;*/
 }
 header {
