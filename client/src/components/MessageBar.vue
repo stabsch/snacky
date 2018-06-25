@@ -101,7 +101,7 @@ methods: {
 	SnackToApp () {
   		// body...
   		// this.$emit('composeSnack', {user: this.user, snack: this.checkedSnackType, options: pickedOptions})
-  		this.$emit('readSnack',Snack.Snack(this.userID, this.user, this.checkedSnackType, this.pickedOptions, this.note))
+  		this.$emit('readSnack',Snack.Snack(this.userID, this.user, this.checkedSnackType, this.pickedOptions, this.notes))
   	}
   },
   compiled: {

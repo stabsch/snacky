@@ -1,6 +1,7 @@
 <template>
 	<div class="SnackMessage">
 				<!-- <span class="wrapimg"> -->
+			<div class="snackInfo">
 			<div class="profile">
 				<p class="username">{{snack.username}}</p>	
 				<img class="userimg" src="../assets/default-userimg.jpg">
@@ -19,6 +20,14 @@
 				<span v-if="whatOption('Meet')">🙋️</span>
 				<span v-if="whatOption('Deliver')">💻️</span>
 			</div>
+			<div class="note">
+				<p>{{snack.note}}</p>
+			</div>
+			</div>
+			<div class="bottomSnackMessage">
+				<div class="joinedUsers">Matched Users: <span v-for="user in matchedUsers">&nbsp{{user}}</span></div>
+				<div class="sendbutton"><button>match</button> </div>
+			</div>
 		</div>
 <!-- <p>{{snack}}</p> -->
 </div>
@@ -33,6 +42,7 @@ export default {
     return {
     	// avSnacks: ["Coffee", "Sweet", "Fruit", "Lunch"],
     	// emoji: ["☕️","🍫️","🍏️","🍕️","🙋️","💻️"]
+    	matchedUsers: []
     }
   },
   computed: {
@@ -64,13 +74,13 @@ export default {
 /* maybe use block?*/
 .SnackMessage {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	background: #a97858;
 	width: 40vw;
 	/*height:300px;*/
-	padding:10px;
+	padding:0px;
 	min-height: 0px;
 	/* explicitly state, chrome doesnt render correctly otherwise*/
 	flex: 0 0 auto;
@@ -79,6 +89,46 @@ export default {
 	font-family: Lato;
 	font-size: 20px;
 	box-shadow: 5px 5px 7px;
+	text-shadow: 2px 2px #000000;
+
+}
+.bottomSnackMessage {
+	display:flex;
+	flex-direction: row;
+	width:100%;
+	justify-content: space-between;
+
+
+}
+
+.snackInfo {
+	display: flex;
+	justify-content: space-around;
+	flex: 1 0 auto;
+	width: 100%;
+	align-items: center;
+}
+.joinedUsers {
+	display: block;
+	word-break: break-all;
+	justify-content: flex-start;
+	padding: 20px;
+	color: white;
+	text-align: left;
+}
+.sendbutton {
+	padding-right: 40px
+}
+ .note {
+	display: flex;
+	background: white;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: 10em;
+	text-shadow: 0px 0px #ffffff;
+	font-size: 15px;
+	overflow-y: hidden;
+	word-break: break-all;
 }
 .information {
 	background: #fff;

@@ -10,7 +10,7 @@ var Snack = require('../snack.js')
 // server.listen(4000)
 var pastSnacks = []
 
-
+// I don't think it's really necessary to save to a json, start with clean slate at every server start 
 
 //console.log(path.resolve(__dirname, '..', 'public'))
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
@@ -27,7 +27,7 @@ io.sockets.on('connection', function (socket) {
     	// Snack.setID(data)
     	// add to past snacks on the server
     	pastSnacks.push(Snack.setID(data))
-    	// save
+    	
         console.log(pastSnacks)
     	// broadcast to all Users connected (including original client)
     	socket.broadcast.emit('addSnack', data)
