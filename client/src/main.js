@@ -6,8 +6,11 @@ import router from './router'
 /* eslint-disable-next-line */
 import io from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io';
-
+var port = process.env.PORT || 4000
+var IP = process.env.IP || 'http://localhost'
+//
 // Change this to IP/Domain and port!!
+var connectTO = IP +':'+port.toString()
 export const socket = io('http://localhost:4000')
 /* eslint-disable-next-line */
 

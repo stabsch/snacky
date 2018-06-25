@@ -51,5 +51,5 @@ io.sockets.on('connection', function (socket) {
 console.log(new Date().getTime())
 
 // change this port (or do process.env)
-server.listen(4000)
-module.exports = app
+// server.listen(4000)
+module.exports = server

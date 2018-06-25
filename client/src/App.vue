@@ -1,5 +1,30 @@
-<template>
+<!-- 
+TO-DO 
 
+    -refactor API
+    -refactor Layout (this is a wild mess)
+        -dont only use flexbox
+        -use/learn child combinator for css styling
+        -style more
+    - Vue: break stuff into more components
+    - clean up communication between components
+    - abstract more in general
+
+    -Features to add
+      -profile images (use localStorage to store, store as base64, send in messages as base64, resize properly beforehand (limited storage))
+      -webNotifications
+      -gifs
+      -more pictures (no more emojis)
+      -big picture/banner at start with get started button
+      -maybe a help section with a modal?
+      -transitions (v-show)
+
+    -ErrorHandling
+      -  most of the stuff could be prevented with log in system
+
+    -Comment (I'm sorry about this, as usual, little time -> few comments)
+ -->
+<template>
   <div id="app">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
