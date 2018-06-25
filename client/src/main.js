@@ -7,11 +7,10 @@ import router from './router'
 import io from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io';
 
+// Change this to IP/Domain and port!!
 export const socket = io('http://localhost:4000')
 /* eslint-disable-next-line */
-// socket.emit('set', 'is_it_ok', function (response) {
-//   console.log(response)
-// })
+
 
 Vue.use(VueSocketIO, socket)
 

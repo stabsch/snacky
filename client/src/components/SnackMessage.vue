@@ -4,6 +4,7 @@
 			<div class="snackInfo">
 			<div class="profile">
 				<p class="username">{{snack.username}}</p>	
+
 				<img class="userimg" src="../assets/default-userimg.jpg">
 			</div>	<!-- </span> -->
 			<div class="information"
@@ -14,7 +15,6 @@
 				<span v-if="whatSnack('Sweet')">🍫️</span>
 				<span v-if="whatSnack('Fruit')">🍏️</span>
 				<span v-if="whatSnack('Lunch')">🍕️</span>
-				<!-- <span v-for="snack in avSnacks" :key="snack.id">{{snack}}{{key}}</span> -->
 			</div>
 			<div class="options">
 				<span v-if="whatOption('Meet')">🙋️</span>
@@ -26,23 +26,24 @@
 			</div>
 			<div class="bottomSnackMessage">
 				<div class="joinedUsers">Matched Users: <span v-for="user in matchedUsers">&nbsp{{user}}</span></div>
-				<div class="sendbutton"><button>match</button> </div>
+				<div class="sendbutton" @click="matchUser" v-show="disabled"><button>match</button> </div>
 			</div>
-		</div>
-<!-- <p>{{snack}}</p> -->
+		</div
 </div>
 </template>
 
 <script>
+// i need a global eventbus, see below
+import { EventBus } from '../event-bus.js';
 export default {
 
   name: 'SnackMessage',
-  props: ['snack'],
+  props: ['snack','userID'],
   data () {
     return {
-    	// avSnacks: ["Coffee", "Sweet", "Fruit", "Lunch"],
-    	// emoji: ["☕️","🍫️","🍏️","🍕️","🙋️","💻️"]
-    	matchedUsers: []
+    	matchedUsers: this.snack.matchedUsers,
+    	showMatchButton: true,
+    	test:''
     }
   },
   computed: {
@@ -60,12 +61,21 @@ export default {
   methods: {
   	  	whatSnack (arg) {
   		// body...
-  	 	// console.log(this.snack.snackType.includes(this.avSnacks[arg]))
   		return this.snack.snackType.includes(arg)
   	},
   		whatOption (arg) {
   		return this.snack.options.includes(arg)
+  		},
+  		// this kinda necessitates a global eventbus, or it gets unneccessarily complicated (need to communicate with brother)
+  		matchUser () {
+  			EventBus.$emit('sendWithUserName',this.snack.messageID)
   		}
+  },
+  sockets: {
+  },
+  created () {
+  	// check if User is the same one who created SnackMessage, show the Match button only if he is not
+  	this.disabled= !(this.userID == this.snack.userID)
   }    
 }
 </script>
@@ -118,6 +128,11 @@ export default {
 }
 .sendbutton {
 	padding-right: 40px
+}
+.sendbutton button {
+	width: 120px;
+	height: 50px;
+	border-radius: 10px;
 }
  .note {
 	display: flex;

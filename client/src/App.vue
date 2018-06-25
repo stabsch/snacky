@@ -15,12 +15,12 @@
       <div class="wrapper3">
               <p>{{userID}}</p>
        <!-- <p>{{listSnacks}}</p> -->
-          <SnackMessage v-for="item in listSnacks" :snack="item" :key="item.id"></SnackMessage>
+          <SnackMessage v-for="item in listSnacks" :snack="item" :key="item.id" :userID="userID"></SnackMessage>
       </div>
 
     </div>
     <footer>
-                  <MessageBar @readSnack="createSnack($event)" @sendUserId="createUserID($event)" :userID="userID" :localuserID="localuserID"></MessageBar>
+                  <MessageBar @readSnack="createSnack($event)" @sendUserId="createUserID($event)"  :userID="userID"></MessageBar>
              
 
     </footer>
@@ -42,6 +42,7 @@ export default {
   },
   data () {
     return {
+      user: null,
       userID: null,
       pastSnacks: [],
       listSnacks: [],
@@ -51,7 +52,7 @@ export default {
   },
   methods: {
     // create userID when prompted (and there isn't one already)
-    createUserID (userID) {
+    createUserID (userID, user) {
       localStorage.setItem('userID', userID)
     },
     // what happens when App gets a Send notice from child MessageBar
@@ -86,17 +87,19 @@ export default {
 //Events for socketio API
   sockets: {
     connect() {
-      this.$socket.emit('set', 'is_it_ok', function (response) {
-      console.log(response)
-      })
     },
     addSnack(data) {
       this.listSnacks.push(data)
     },
     oldSnacks (data) {
       this.listSnacks = data
-    }
-  }
+    },
+    // Update listSnacks when a User matches with a SnackMessage
+    editInMatchedUser (data) {
+      this.listSnacks.filter(Snack => Snack.messageID == data.messageID).forEach(element => {
+            element.matchedUsers.push(data.name)
+    })
+  }}
 }
 </script>
 

@@ -7,10 +7,7 @@
 			</div>
 		</div>
 		<div class="snackPanel">
-<!--            <p>Coffee</p>
-			<p>Snack</p>
-			<p>Both</p>
-			<p>Leave Office?</p> -->
+
 			<span class="paneldescription">Choose at least one</span>
 			<ul class="activityList">
 
@@ -46,15 +43,14 @@
       <li v-for="error in errors">{{ error }}</li>
     </ul>
   </p>
-<!-- 			<p>{{checkedSnackType}}</p>
-	<p>{{user}}</p><p>{{userID}}</p><p>{{localuserID}}</p> -->
+
 
 </div>
 </div>
 </template>
 <script>
 import * as Snack from '../snack.js'
-
+import { EventBus } from '../event-bus.js';
 export default {
 
 	name: 'MessageBar',
@@ -102,11 +98,21 @@ methods: {
   		// body...
   		// this.$emit('composeSnack', {user: this.user, snack: this.checkedSnackType, options: pickedOptions})
   		this.$emit('readSnack',Snack.Snack(this.userID, this.user, this.checkedSnackType, this.pickedOptions, this.notes))
+  	 },
+  	 matchToServer(messageID) {
+  		//Fix this: what if user deletes his name?
+  		// console.log('sendWithUsername')
+  		// console.log(this.user)
+  		this.$socket.emit('matchUsertoSnackMessage', {name: this.user, messageID: messageID})
   	}
   },
-  compiled: {
-
-  }  
+  mounted () {
+  	EventBus.$on('sendWithUserName', messageID => {
+  	// console.log('sendWithUsername')
+  	this.matchToServer(messageID)
+  	})
+  		
+  }
 }
 </script>
 

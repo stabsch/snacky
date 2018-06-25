@@ -9,18 +9,13 @@ var Snack = require('../snack.js')
 
 // server.listen(4000)
 var pastSnacks = []
-
+//
 // I don't think it's really necessary to save to a json, start with clean slate at every server start 
-
+//
 //console.log(path.resolve(__dirname, '..', 'public'))
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
 io.sockets.on('connection', function (socket) {
-    socket.on('set', function (status, callback) {
-        console.log(status);
-        callback('this is a callback');
-    });
-
     // what happens when a client wants to add a new snack
     socket.on('createSnack', (data, callback) => {
     	// id obviously not truly unique, but ok for now
@@ -32,9 +27,21 @@ io.sockets.on('connection', function (socket) {
     	// broadcast to all Users connected (including original client)
     	socket.broadcast.emit('addSnack', data)
     	// socket.emit('addSnack', data)
+        // does it with a callback
         console.log(data.messageID)
         callback(data.messageID)
     	})
+    socket.on('matchUsertoSnackMessage', (data, callback) => {
+        console.log(data.name,data.messageID)
+        // add user to message's matchedUsers array
+        pastSnacks.filter(Snack => Snack.messageID == data.messageID).forEach(element => {
+            element.matchedUsers.push(data.name)
+        })
+        console.log( pastSnacks.filter(Snack => Snack.messageID == data.messageID))
+        // goes out to socket in App to edit list of Snackmessages accordingly
+        socket.broadcast.emit('editInMatchedUser', data)
+        socket.emit('editInMatchedUser', data)
+    })
     
     // if a new client connects, serve him the past Snacks	
     socket.emit('oldSnacks', pastSnacks);
@@ -43,5 +50,6 @@ io.sockets.on('connection', function (socket) {
 
 console.log(new Date().getTime())
 
+// change this port (or do process.env)
 server.listen(4000)
 module.exports = app

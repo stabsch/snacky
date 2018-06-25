@@ -3,11 +3,12 @@
 module.exports = {
 	Snack: function (userid, user, snackType, options, note) {
 		// body...
-		return {userID: userid, messageID: '' ,username: user, snackType: snackType, options: options, note: note}
+		return {userID: userid, messageID: '' ,username: user, snackType: snackType, options: options, note: note, matchedUsers: []}
 	},
 	setID: function (data) {
 		// body...
-		data.messageID = data.userID + new Date().getTime().toString()
+		var time =   new Date().getTime().toString()
+		data.messageID = data.userID + time
 		return data
 	}
 }
